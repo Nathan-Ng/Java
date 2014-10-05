@@ -1,0 +1,63 @@
+package BrickBreaker;
+
+import java.util.ArrayList;
+
+import zen.core.Zen;
+
+public class BrickBreaker {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		int bx;
+		int by;
+		int bc;
+		int bc2;
+		Zen.create(500, 800);
+		//setup
+		Paddle p=new Paddle();
+		Ball b =new Ball();
+		ArrayList<Brick> bricks = new ArrayList<Brick>();
+		 bx=0;
+		 by=10;
+		bc=0;
+		bc2=0;
+		int brickCount=0;
+		while (brickCount<100){
+
+			
+			while (bc2<=3){
+				while(bc<=13){
+					bx=bx+40;
+					Brick br=new Brick(bx,by);
+					bricks.add(br);
+					bc=bc+1;
+				}
+				bc2=bc2+1;
+				by=by+20;
+			}
+			brickCount++;
+		}
+		while(true){
+			drawBackground();
+			p.draw();
+			p.move();
+			b.draw();
+			b.move();
+			b.isTouching(p);
+			
+			for (Brick br : bricks) {
+				br.draw();
+			}
+			Zen.buffer(33);
+		}
+
+	}
+
+	private static void drawBackground() {
+		Zen.setBackground("white");
+		
+	}
+
+}
