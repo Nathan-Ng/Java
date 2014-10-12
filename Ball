@@ -41,11 +41,13 @@ public class Ball {
 			dx=Zen.getRandomNumber(-5, 5);
 			dy=Zen.getRandomNumber(5, 8);
 		}	
+		
 	}
 	
 	public boolean isTouching(Paddle p) {
 		if (Math.abs(p.yp-y)<20&&Math.abs(p.xp-x)<50){
-			dy=dy*-1;
+			dy=Zen.getRandomNumber(-5, -8);
+			dx=Zen.getRandomNumber(-5, 5);
 			return true;
 		}
 		else {
