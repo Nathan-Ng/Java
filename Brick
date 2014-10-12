@@ -6,14 +6,43 @@ public class Brick {
 	
 	int x;
 	int y;
+	boolean c=false;
+	
+	public Brick() {
+		
+	}
 	
 	public Brick(int newX, int newY){
 		x=newX;
 		y=newY;
+
 	}
 	
+	public boolean isTouching(Ball b) {
+		if (Math.abs(b.y-y)<40&&Math.abs(b.x-x)<50){
+		if (c==false){
+			b.dy=-b.dy;
+			b.dx=Zen.getRandomNumber(-5, 5);
+		}
+		c=true;
+		
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	
 	public void draw(){
-		Zen.setColor("yellow");
+		if(c==true){
+			Zen.setColor("white");
+		}
+		if(c==false){
+		Zen.setColor("yellow");	
+		}
 		Zen.fillRect(x-20, y-10, 40, 20);
 	}
+	
+
 }
