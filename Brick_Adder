@@ -1,0 +1,35 @@
+package BrickBreaker;
+
+import zen.core.Zen;
+
+public class Brick_Ball_Adder extends Brick{
+ 
+	
+	
+	public Brick_Ball_Adder(int i, int j) {
+		x = i;
+		y = j;
+	}
+
+	public boolean isTouching(Ball b) {
+		if (Math.abs(b.y-y)<40&&Math.abs(b.x-x)<50){
+		if (c==false){
+			b.dy=-b.dy;
+			b.dx=Zen.getRandomNumber(-5, 5);
+			Ball bn = new Ball();
+			bn.draw();
+			bn.move();
+			Paddle p = new Paddle();
+			bn.isTouching(p);
+		}
+		c=true;
+		
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+
+}
