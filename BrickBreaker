@@ -19,18 +19,19 @@ public class BrickBreaker {
 		Paddle p=new Paddle();
 		Ball b =new Ball();
 		ArrayList<Brick> bricks = new ArrayList<Brick>();
-		 bx=0;
-		 by=10;
+		bx=0;
+		by=10;
 		bc=0;
 		bc2=0;
 		int brickCount=0;
 		while (brickCount<100){
 
-			
+
 			while (bc2<=3){
 				while(bc<=13){
-					bx=bx+40;
 					Brick br=new Brick(bx,by);
+					bx=bx+40;
+
 					bricks.add(br);
 					bc=bc+1;
 				}
@@ -38,18 +39,27 @@ public class BrickBreaker {
 				by=by+20;
 			}
 			brickCount++;
+		
 		}
 		while(true){
 			drawBackground();
+			Brick_Ball_Adder ba=new Brick_Ball_Adder(200, 200);
+			ba.draw();
+			ba.isTouching(b);
+			
+			
 			p.draw();
 			p.move();
-			b.draw();
-			b.move();
 			b.isTouching(p);
-			
+
+
 			for (Brick br : bricks) {
 				br.draw();
+				br.isTouching(b);
 			}
+			b.draw();
+			b.move();
+
 			Zen.buffer(33);
 		}
 
@@ -57,7 +67,7 @@ public class BrickBreaker {
 
 	private static void drawBackground() {
 		Zen.setBackground("white");
-		
+
 	}
 
 }
