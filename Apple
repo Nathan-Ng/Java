@@ -1,0 +1,19 @@
+package Snake;
+
+import zen.core.Zen;
+
+public class Apple {
+	
+	int x=Zen.getRandomNumber(10, 490);
+	int y=Zen.getRandomNumber(490);
+	
+	public void draw() {
+		Zen.fillRect(x, y, 10, 10);
+	}
+	
+	public void teleport() {
+		x=Zen.getRandomNumber(10, 490);
+	    y=Zen.getRandomNumber(490);
+	}
+
+}
