@@ -1,0 +1,139 @@
+package Snake;
+
+import zen.core.Zen;
+
+public class Snake {
+	int x=400;
+	int y=400;
+	int dx=10;
+	int dy=10;
+	int direction=0;
+	int message=0;
+	int counter=0;
+	Snake next=null;
+
+	public void draw() {
+		Zen.setColor("black");
+		Zen.fillRect(x, y, 10, 10);
+
+		if (next!=null){
+			next.draw();
+		}
+	}
+
+	public void move() {
+
+		if (direction==0){
+			dy=-10;
+			dx=0;
+		}
+
+		if (direction==2){
+			dy=10;
+			dx=0;
+		}
+
+		if (direction==1){
+			dx=10;
+			dy=0;
+		}
+
+		if (direction==3){
+			dx=-10;
+			dy=0;
+		}
+
+		y=y+dy;
+		x=x+dx;
+		
+		if (message>0){
+		direction=message-1;
+		}
+		
+		if (next!=null){
+			next.move();
+			next.check();
+			next.message=message;
+		}
+	}
+
+	public void check() {
+
+		if (y<10){
+			y=490;
+		}
+
+		if (y>490){
+			y=10;
+		}
+
+		if (x<10){
+			x=490;
+		}
+
+		if (x>490){
+			x=10;
+		}
+
+	}
+
+	public void check2 (){
+		if (Zen.isKeyPressed("up")&&direction!=2){
+			message=1;
+		}
+
+		if (Zen.isKeyPressed("right")&&direction!=3){
+			message=2;
+		}
+
+		if (Zen.isKeyPressed("down")&&direction!=0){
+			message=3;
+		}
+		if (Zen.isKeyPressed("left")&&direction!=1){
+			message=4;
+		}
+	}
+
+	public boolean isHitting(Apple a) {
+		if (Math.abs(x-a.x)<10 && Math.abs(y-a.y)<10){
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public void grow() {
+		if (next==null){
+			next=new Snake();
+			next.x=x;
+			next.y=y;
+			next.direction=direction;
+
+			if (direction==0){
+				next.x=x;
+				next.y=y+10;
+			}
+
+			if (direction==1){
+				next.y=y;
+				next.x=x-10;
+			}
+
+			if (direction==2){
+				next.x=x;
+				next.y=y-10;
+			}
+
+			if (direction==3){
+				next.y=y;
+				next.x=x+10;
+			}
+
+		}
+		else {
+			next.grow();
+		}
+	}
+
+}
