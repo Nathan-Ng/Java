@@ -1,0 +1,79 @@
+package CaptureTheFlag;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
+import zen.core.Zen;
+
+public class Main {
+	
+	public static void main(String[] args) {
+		Zen.connect("capture the flag");
+		Zen.write("nathanx",  250);
+		Zen.write("nathany",  250);
+		Zen.write("nathanteam",  "red");
+		Player me = new Player("nathan");
+		Zen.create(1000, 500);
+		
+		Game g=new Game();
+		Team redTeam = new Team("red");
+		redTeam.addPlayer(new Player("keshav"));
+		redTeam.addPlayer((me));
+		redTeam.addPlayer(new Player("diyva"));
+		redTeam.addPlayer(new Player("ruchi"));
+		redTeam.addPlayer(new Player("alejando"));
+		redTeam.addPlayer(new Player("aakash"));
+		g.addTeam(redTeam);
+		
+		Team blueTeam = new Team("blue");
+		blueTeam.addPlayer(new Player("nicolas"));
+		blueTeam.addPlayer(new Player("anoop"));
+		blueTeam.addPlayer(new Player("amogh"));
+		blueTeam.addPlayer(new Player("rishi"));
+		blueTeam.addPlayer(new Player("rohan"));
+		g.addTeam(blueTeam);
+		ArrayList<Player> p=new ArrayList<Player>();
+		
+		
+		while (true){
+			background();
+			g.draw();
+			g.move();
+			
+			if (Zen.isKeyPressed("left")){
+				Zen.write("nathanx", getX()-10);
+			}
+			if (Zen.isKeyPressed("right")){
+				Zen.write("nathanx", getX()+10);
+			}
+			if (Zen.isKeyPressed("up")){
+				Zen.write("nathany", getY()-10);
+			}
+			if (Zen.isKeyPressed("down")){
+				Zen.write("nathany", getY()+10);
+			}
+			
+			if (getX()>500 && blueTeam.isTouching(me)){
+				Zen.write("nathanx",250);
+				Zen.write("nathany",250);
+			}
+			
+			Zen.buffer(33);
+		}
+		
+	}
+
+	private static int getX() {
+		return Zen.readInt("nathanx");
+	}
+	private static int getY() {
+		return Zen.readInt("nathany");
+	}
+
+	private static void background() {
+		Zen.setBackground("green");
+		Zen.setColor("white");
+		Zen.fillRect(499, 0, 2, 500);
+	}
+
+}
