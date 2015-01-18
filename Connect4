@@ -1,0 +1,145 @@
+import zen.core.Zen;
+
+
+public class Connect_Four {
+	static int [][] board;
+	static int current=1;
+	
+	
+	
+	public static void main(String[] args) {
+		setup();
+		while (true){
+			if (Zen.isMouseClicked()){
+				int x=Zen.getMouseX()/100;
+				drop (x);
+				draw();
+				Zen.sleep(500);
+				int win = winner();
+				
+				if (win > 0){
+					if (win == 1) {
+						Zen.setBackground("red");
+					}
+					else {
+						Zen.setBackground("blue");
+					}
+					Zen.buffer(2000);
+					board=new int [7][6];
+				}
+			}
+			draw();
+		}
+
+	}
+	public static int winner() {
+		//horizontal
+		for (int x=0; x<4; x++){
+			for (int y=0; y<6; y++){
+				if (board [x][y]!=0){
+					if (board[x][y]==board[x+1][y]&&
+						board[x][y]==board[x+2][y]&&
+						board[x][y]==board[x+3][y]){
+							return board [x][y];
+					}
+				}
+			}
+		}
+		//vertical
+		for (int x=0; x<7; x++){
+			for (int y=0; y<3; y++){
+				if (board [x][y]!=0){
+					if (board[x][y]==board[x][y+1]&&
+						board[x][y]==board[x][y+2]&&
+						board[x][y]==board[x][y+3]){
+							return board [x][y];
+					}
+				}
+			}
+		}
+		//for diagonal right
+		for (int x=0; x<4; x++){
+			for (int y=0; y<3; y++){
+				if (board [x][y]!=0){
+					if (board[x][y]==board[x+1][y+1]&&
+						board[x][y]==board[x+2][y+2]&&
+						board[x][y]==board[x+3][y+3]){
+							return board [x][y];
+					}
+				}
+			}
+		}
+		//for diagonal left
+				for (int x=0; x<4; x++){
+					for (int y=3; y<6 ; y++){
+						if (board [x][y]!=0){
+							if (board[x][y]==board[x + 1][y-1]&&
+								board[x][y]==board[x + 2][y-2]&&
+								board[x][y]==board[x + 3][y-3]){
+									return board [x][y];
+							}
+						}
+					}
+				}
+		
+		return 0;
+	}
+	
+	public static void drop(int x) {
+		if (x<0||x>6||board[x][0]!=0){
+			return;
+		}
+		
+		int y=0;
+		while (y<5&&board[x][y+1]==0){
+			y++;
+		}
+		board[x][y]=current;
+		if (current==1){
+			current=2;
+		}else {
+			current=1;
+		}
+	}
+
+	private static void setup() {
+		Zen.create(700, 600);
+		board=new int [7][6];
+		
+	}
+
+	private static void draw() {
+		Zen.setBackground("yellow");
+		Zen.setColor("black");
+		for (int x=0;x<7; x+=1){
+			for (int y=0; y<6; y+=1){
+				if (board[x][y]==1){
+					Zen.setColor("red");
+				}
+				else if (board[x][y]==2){
+					Zen.setColor("blue");
+				}
+				else{
+					if (Zen.getMouseX()/100==x){
+						Zen.setColor("gray");
+					}else{
+						Zen.setColor("black");
+					}
+				}
+				Zen.fillOval(x*100+20, y*100+20, 60, 60);
+			}
+		}
+//		int win=winner();
+//		if (win > 0) {
+//			if (win==1){
+//				Zen.setColor("red");
+//				Zen.fillRect(0, 0, 700, 600);
+//			}else{
+//				Zen.setColor("blue");
+//				Zen.fillRect(0, 0, 700, 600);
+//			}
+//		}
+		Zen.buffer(33);
+	}
+
+}
